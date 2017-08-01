@@ -1,0 +1,11 @@
+#! /bin/bash -e
+
+if [ ! -d "/mysql" ];then
+	mkdir -p /mysql  
+fi
+
+if [ ! -d "/var/gogs" ];then
+	mkdir -p /var/gogs
+fi
+
+docker-compose up -d

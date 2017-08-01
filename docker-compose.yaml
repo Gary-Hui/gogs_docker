@@ -1,0 +1,33 @@
+app:
+  image: "496960694/nginx:2.0"
+  ports:
+    - "80:80"
+    - "443:443"
+  links: 
+    - gogs
+  volumes:
+    - "./app/nginx/config/nginx:/etc/nginx"
+  container_name: gogs_nginx
+  restart: always
+
+gogs:
+  image: "gogs/gogs:0.9.141"
+  env_file:
+    - ./config/env/local
+  links:
+    - db
+  ports:
+    - "3000:3000"
+    - "10022:22"
+  volumes:
+    - "/var/gogs:/data"
+  restart: always
+  container_name: gogs
+
+db:
+  image: "mysql:5.6.36"
+  env_file:
+    - ./config/env/local
+  volumes: 
+    - "/mysql:/var/lib/mysql"
+  restart: always
